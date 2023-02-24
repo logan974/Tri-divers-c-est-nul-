@@ -65,8 +65,28 @@ func tri_insertion(tab []int) []int {
 func tri_rapide(tab []int) []int {
 
 	// Voir : https://yourbasic.org/golang/append-explained/
+	n := len(tab)
+	pivot := tab[n-1]
 
-	return (tab)
+	tabp := []int{}
+	tabg := []int{}
+	if n > 1 {
+		for i := 0; i < n-1; i++ {
+			if tab[i] < pivot {
+				tabp = append(tabp, tab[i])
+			} else {
+				tabg = append(tabg, tab[i])
+			}
+		}
+		tabg = append(tabg, tab[n-1])
+		tabg = tri_rapide(tabg)
+		tabp = tri_rapide(tabp)
+	}
+	for k := 0; k < len(tabg); k++ {
+		tabp = append(tabp, tabg[k])
+	}
+
+	return (tabp)
 }
 
 func fusion(tab1 []int, tab2 []int) []int {
