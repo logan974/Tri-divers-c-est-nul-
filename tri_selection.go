@@ -66,11 +66,11 @@ func tri_rapide(tab []int) []int {
 
 	// Voir : https://yourbasic.org/golang/append-explained/
 	n := len(tab)
-	pivot := tab[n-1]
 
-	tabp := []int{}
-	tabg := []int{}
+	tabp := []int{} //tab petit
+	tabg := []int{} //tab grand
 	if n > 1 {
+		pivot := tab[n-1]
 		for i := 0; i < n-1; i++ {
 			if tab[i] < pivot {
 				tabp = append(tabp, tab[i])
@@ -78,26 +78,57 @@ func tri_rapide(tab []int) []int {
 				tabg = append(tabg, tab[i])
 			}
 		}
-		tabg = append(tabg, tab[n-1])
 		tabg = tri_rapide(tabg)
 		tabp = tri_rapide(tabp)
-	}
-	for k := 0; k < len(tabg); k++ {
-		tabp = append(tabp, tabg[k])
+		tabp = append(tabp, pivot)
+		for k := 0; k < len(tabg); k++ {
+			tabp = append(tabp, tabg[k])
+		}
+	} else {
+		tabp = tab
 	}
 
 	return (tabp)
 }
 
 func fusion(tab1 []int, tab2 []int) []int {
+	tab := []int{}
 
 	// Voir : https://yourbasic.org/golang/append-explained/
+	check := (len(tab1) * 2) - 1
+	indextab1 := 0
+	indextab2 := 0 
+	for i := 0; i <= check; i++ {
+		if tab1[i] < tab2[i] {
+			tab = append(tab, tab1[i])
+			indextab1 += 1
+		} else {
+			tab = append(tab, tab2[i])
+			indextab2 += 1
+		}
 
-	return ([]int{})
+	return (tab)
+	//return ([]int{})
 }
 
 func tri_fusion(tab []int) []int {
 
+	n := len(tab)
+	tabgauche := []int{}
+	tabdroite := []int{}
+	if n > 1 {
+
+		coupure := n / 2
+
+		tabgauche = append(tabgauche, tab[0:coupure]...)
+		tabdroite = append(tabdroite, tab[coupure:n]...)
+		if len(tabgauche) > 1 || len(tabdroite) > 1 {
+			tri_fusion(tabgauche)
+			tri_fusion(tabdroite)
+		}
+		tab = fusion(tabgauche, tabdroite)
+
+	}
 	return (tab)
 }
 
