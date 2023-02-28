@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 func tri_selection(tab []int) []int {
 
@@ -176,5 +180,7 @@ func main() {
 	tab = []int{408, 9873, 35, 12, 16, 66, 77, 321, 788, 2, 45, 8, 55, 1244, 1987, 1762}
 
 	fmt.Println("Tri fusion:", tri_fusion(tab))
+
+	bufio.NewReader(os.Stdin).ReadBytes('\n')
 
 }
