@@ -97,18 +97,32 @@ func fusion(tab1 []int, tab2 []int) []int {
 	// Voir : https://yourbasic.org/golang/append-explained/
 	check := (len(tab1) * 2) - 1
 	indextab1 := 0
-	indextab2 := 0 
+	indextab2 := 0
 	for i := 0; i <= check; i++ {
-		if tab1[i] < tab2[i] {
-			tab = append(tab, tab1[i])
-			indextab1 += 1
-		} else {
-			tab = append(tab, tab2[i])
+		if indextab1 < len(tab1) && indextab2 < len(tab2) {
+			if tab1[indextab1] < tab2[indextab2] {
+				tab = append(tab, tab1[indextab1])
+				indextab1 += 1
+			} else {
+				tab = append(tab, tab2[indextab2])
+				indextab2 += 1
+			}
+		}
+		if indextab1 >= len(tab1) && indextab2 < len(tab2) {
+			tab = append(tab, tab2[indextab2])
 			indextab2 += 1
 		}
+		if indextab2 >= len(tab2) && indextab1 < len(tab1) {
+			tab = append(tab, tab1[indextab1])
+			indextab1 += 1
+		}
+		if indextab1 >= len(tab1) && indextab2 >= len(tab2) {
+			break
+		}
 
+		//return ([]int{})
+	}
 	return (tab)
-	//return ([]int{})
 }
 
 func tri_fusion(tab []int) []int {
@@ -123,8 +137,8 @@ func tri_fusion(tab []int) []int {
 		tabgauche = append(tabgauche, tab[0:coupure]...)
 		tabdroite = append(tabdroite, tab[coupure:n]...)
 		if len(tabgauche) > 1 || len(tabdroite) > 1 {
-			tri_fusion(tabgauche)
-			tri_fusion(tabdroite)
+			tabgauche = tri_fusion(tabgauche)
+			tabdroite = tri_fusion(tabdroite)
 		}
 		tab = fusion(tabgauche, tabdroite)
 
