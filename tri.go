@@ -1,9 +1,7 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 )
 
 func tri_selection(tab []int) []int {
@@ -181,6 +179,7 @@ func main() {
 
 	fmt.Println("Tri fusion:", tri_fusion(tab))
 
-	bufio.NewReader(os.Stdin).ReadBytes('\n')
+	// Pause a la fin
+	//bufio.NewReader(os.Stdin).ReadBytes('\n')
 
 }
